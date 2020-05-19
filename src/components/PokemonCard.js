@@ -1,27 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
 
-function PokemonCard(props) {
-	const pokemon = {
-		name: props.name,
-		url: props.url
-	}
-
-	const [ pokemonImg, setPokemonImg ] = useState('');
-
-	useEffect(() => {
-		loadPokemonInfo()
-	})
-	 
-	const loadPokemonInfo = async () => {
-		const response = await axios.get(pokemon.url);
-		setPokemonImg(response.data.sprites.front_default)
-	}
+function PokemonCard({ pokemon }) {
 
 	return (
 		 <li>
-				<img alt={pokemon.name} src={pokemonImg}></img>
+				<img alt={pokemon.name} src={pokemon.sprites.front_default}></img>
 				<h1>{pokemon.name}</h1>
+				<p>{}</p>
 		 </li>
 	)
 }
