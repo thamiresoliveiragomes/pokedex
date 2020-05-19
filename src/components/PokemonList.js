@@ -3,23 +3,21 @@ import axios from 'axios';
 import PokemonCard from './PokemonCard';
 
 function PokemonList(){
-	const [ pokemonData, setPokemonData ] = useState([]);
 	const [ nextUrl, setNextUrl ] = useState('');
 	const [ prevUrl, setPrevUrl ] = useState('');
 	const initialUrl = 'https://pokeapi.co/api/v2/pokemon/';
 	const [ pokemonInfo, setPokemonInfo ] = useState([])
 
 	useEffect(() => {
+		const loadPokemonData = async () => {
+			let response = await axios.get(initialUrl);
+			const results = response.data.results;
+			setNextUrl(response.data.next);
+			setPrevUrl(response.data.previous);
+			await loadPokemonInfo(results)
+		}
 		loadPokemonData()
-	})
-	 
-	const loadPokemonData = async () => {
-		let response = await axios.get(initialUrl);
-		setPokemonData(response.data.results);
-		setNextUrl(response.next);
-		setPrevUrl(response.previous);
-		loadPokemonInfo(pokemonData)
-	}
+	},[])
 
 	const loadPokemonInfo = async data => {
 		let _pokemonData =  await Promise.all(
@@ -31,21 +29,21 @@ function PokemonList(){
 		setPokemonInfo(_pokemonData)
 	}
 
-	// const prevPage = async () => {
-	// 	const response = await axios.get(prevUrl);
-	// 	setPokemonData(response.data.results);
-	// 	setNextUrl(response.next);
-	// 	setPrevUrl(response.previous);
-	// 	loadPokemonInfo(pokemonData)
-	// }
+	const prevPage = async () => {
+		const response = await axios.get(prevUrl);
+		const results = response.data.results;
+		setNextUrl(response.data.next);
+		setPrevUrl(response.data.previous);
+		loadPokemonInfo(results)
+	}
 
-	// const nextPage = async () => {
-	// 	const response = await axios.get(nextUrl);
-	// 	setPokemonData(response.data.results);
-	// 	setNextUrl(response.next);
-	// 	setPrevUrl(response.previous);
-	// 	loadPokemonInfo(pokemonData)
-	// }
+	const nextPage = async () => {
+		const response = await axios.get(nextUrl);
+		const results = (response.data.results);
+		setNextUrl(response.data.next);
+		setPrevUrl(response.data.previous);
+		await loadPokemonInfo(results)
+	}
 
 	return (
 		<div>
@@ -56,8 +54,8 @@ function PokemonList(){
 				/>
 			)}
 		</ul>
-		{/* <button onClick={prevPage}>Prev</button>
-		<button onClick={nextPage}>Next</button> */}
+		<button onClick={prevPage}>Prev</button>
+		<button onClick={nextPage}>Next</button>
 		</div>
 	)
 }
