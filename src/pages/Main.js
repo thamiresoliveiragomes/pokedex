@@ -1,11 +1,12 @@
 import React from 'react';
 import PokemonList from '../components/PokemonList';
+import Header from '../components/Header';
 
 function Main () {
 
 	return (
 		<div>
-			<h1>Pokedex</h1>
+			<Header />
 			<PokemonList />
 			</div>
 	)

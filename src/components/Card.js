@@ -1,7 +1,6 @@
 import React from 'react';
 
-function PokemonCard({ pokemon }) {
-
+function Card({ pokemon }) {
 	return (
 		 <li>
 				<img alt={pokemon.name} src={pokemon.sprites.front_default}></img>
@@ -11,4 +10,4 @@ function PokemonCard({ pokemon }) {
 	)
 }
 
-export default PokemonCard
+export default Card;
