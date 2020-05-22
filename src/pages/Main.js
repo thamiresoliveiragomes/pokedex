@@ -1,5 +1,5 @@
 import React from 'react';
-import PokemonList from '../components/PokemonList';
+import PokemonMain from '../components/PokemonMain';
 import Header from '../components/Header';
 
 function Main () {
@@ -7,8 +7,8 @@ function Main () {
 	return (
 		<div>
 			<Header />
-			<PokemonList />
-			</div>
+			<PokemonMain />
+		</div>
 	)
 }
 export default Main
